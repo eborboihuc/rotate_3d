@@ -19,7 +19,7 @@ Rotate along XZ axis
 Change main function with ideal [arguments](#parameters)
 
 ```bash
-python demo.py [name of the image] [degree to rotate] ([ideal width] [ideal height])
+python demo.py [path of the image] [degree to rotate] ([ideal width] [ideal height])
 ```
 e.g.,
 Example of rotating an image along yz-axis from 0 to 360 degree with a 5 pixel shift in +X direction
@@ -32,21 +32,22 @@ Example of rotating an image along yz-axis from 0 to 360 degree with a 5 pixel s
 ```
 Then
 ```bash
-python demo.py 000001.jpg 360
+python demo.py images/000001.jpg 360
 ```
 
 ## Parameters:
 
 ```python
-rotate_along_axis(image, theta=0, phi=0, gamma=0, dx=0, dy=0, dz=0):
+it = ImageTransformer(img_path, img_shape)
+it.rotate_along_axis(theta=0, phi=0, gamma=0, dx=0, dy=0, dz=0):
 ```
-img_path  : the path of image that you want rotated
-shape     : the ideal shape of input image, None for original size.
-phi       : the rotation around the y axis
-gamma     : the rotation around the z axis (basically a 2D rotation)
-dx        : translation along the x axis
-dy        : translation along the y axis
-dz        : translation along the z axis (distance to the image)
+- img_path  : the path of image that you want rotated
+- shape     : the ideal shape of input image, None for original size.
+- phi       : the rotation around the y axis
+- gamma     : the rotation around the z axis (basically a 2D rotation)
+- dx        : translation along the x axis
+- dy        : translation along the y axis
+- dz        : translation along the z axis (distance to the image)
 
 
 ## Acknowledgments
