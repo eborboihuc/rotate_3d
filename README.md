@@ -1,4 +1,4 @@
-# Rotation along specific axes
+# Perspective Transformation along specific axes
 
 ## Animation
 
@@ -19,20 +19,20 @@ Rotate along XZ axis
 Change main function with ideal [arguments](#parameters)
 
 ```bash
-python rotate_3d.py [name of the image] [degree to rotate]
+python demo.py [name of the image] [degree to rotate] ([ideal width] [ideal height])
 ```
 e.g.,
-Example of rotating an image along yz-axis from 0 to 360 degree
+Example of rotating an image along yz-axis from 0 to 360 degree with a 5 pixel shift in +X direction
 ```python
-- rotated_img = rotate_along_axis(img, phi = ang, dx = 5)
-+ #rotated_img = rotate_along_axis(img, phi = ang, dx = 5)
+- rotated_img = it.rotate_along_axis(phi = ang, dx = 5)
++ #rotated_img = it.rotate_along_axis(phi = ang, dx = 5)
 
-- #rotated_img = rotate_along_axis(img, phi = ang, gamma = ang)
-+ rotated_img = rotate_along_axis(img, phi = ang, gamma = ang)
+- #rotated_img = it.rotate_along_axis(phi = ang, gamma = ang)
++ rotated_img = it.rotate_along_axis(phi = ang, gamma = ang)
 ```
 Then
 ```bash
-python rotate_3d.py 000001.jpg 360
+python demo.py 000001.jpg 360
 ```
 
 ## Parameters:
@@ -40,8 +40,8 @@ python rotate_3d.py 000001.jpg 360
 ```python
 rotate_along_axis(image, theta=0, phi=0, gamma=0, dx=0, dy=0, dz=0):
 ```
-image     : the image that you want rotated
-theta     : the rotation around the x axis
+img_path  : the path of image that you want rotated
+shape     : the ideal shape of input image, None for original size.
 phi       : the rotation around the y axis
 gamma     : the rotation around the z axis (basically a 2D rotation)
 dx        : translation along the x axis
