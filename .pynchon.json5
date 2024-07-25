@@ -1,0 +1,142 @@
+{ // BEGIN: top-level pynchon config
+  // Everything here is optional.
+  // Literals only; no templating please!
+  "plugins": [
+    // defaults; these are included anyway
+    'render', 'gen', 'project', 'plugins',
+    'jinja', 'json', 'git', 'core', 'gripe',
+    'dockerhub',
+    "makefile",  // makefile parsing
+
+    // Recommended for projects with source-code
+    "docs", "src", "test","github",
+    "vhs",  // vhs rendering
+
+    // For projects with intermediate representations
+    "dot",   // graphviz dot-files
+    "jinja", // projects with templated docs
+    // Docs-Generation
+
+    "pandoc", "mkdocs", "deck",
+
+    // Experimental
+    "griffe",    // ast tool
+    "pattern",  // replacement for scaffold, probably
+  ],
+  // END: top-level config
+
+  // Config for `docs` plugin:
+  //   Runs a webserver to open docs-files
+  "docs": {
+    "root": "{{pynchon.root}}/docs",
+    "include_patterns": [
+        "{{pynchon.root}}/*.md",
+        "{{docs.root}}/**/*.md",
+        "{{docs.root}}/**/*.html",
+      ],
+      "apply_hooks": ["open-after"],
+  },
+  // Config for `dockerhub` plugin:
+  "dockerhub":{
+    "org_name": "robotwranglers",
+    "repo_name": "imgrot",
+  },
+
+  // END: core plugins-config
+  // BEGIN: other plugins-config
+
+  // Config for `deck` plugin:
+  //   Renders slide-decks from markdown
+  "deck": {
+    "root": "{{docs.root}}/slides",
+    "apply_hooks": ["open-after"],
+    "pandoc_engine":"dzslides",
+    "pandoc_args": ["--css dzslides.css"],
+    "pandoc_docker": "pandoc/core",
+  },
+
+    // Config for `github` plugin:
+  "github": {},
+
+  // Config for `hooks` plugin:
+   "hooks": {},
+
+
+  // Config for `jinja` plugin:
+  // Planner for finding/rendering project .j2 files
+  "jinja":{
+    "vars": {},
+
+    "filter_includes": [
+      // where to load jinja filters from
+      // allows {tpls|paths|globs}
+    ],
+
+   "exclude_patterns": [
+     // Describes files that shouldn't show up in plans
+     // `globals.exclude_patterns` will be appended.
+     "src/**/*.j2",
+   ],
+
+   "template_includes": [
+     // Paths to load includes from.
+     // (Used in templates as `{% include .. %}`)
+     "{{docs.root}}/includes",
+   ],
+ },
+
+  // Config for `dot` plugin:
+  // Tool for working with dot (aka graphviz)
+  "dot": {
+    "output_format": "png",
+  },
+
+  // Config for `fixme` plugin:
+  // `globals.exclude_patterns` will be appended.
+  "fixme": {
+    "exclude_patterns": [
+      "**/*.egg-info/**",
+      "{{src.root}}/**/fixme/**",
+      "{{src.root}}/**/fixme.py",
+      "{{src.root}}/**/python/api/**",
+      "{{src.root}}/pynchon/annotate.py",
+    ],
+  },
+  // Config for `python-api` plugin:
+  // This generates API docs for python-packages
+  "python":{},
+  // Config for `python-api` plugin:
+  // This generates API docs for python-packages
+  "python-api":{
+    "skip_private_methods": true,
+    "skip_patterns": [],
+  },
+
+  // Config for `scaffolding` plugin:
+  // This provides ways to synchronize/diff project boilerplate.
+  // (Similar to cookie-cutter[], but more simple to use.)
+  "scaffolding":{
+    "exclude_patterns": [
+      // includes globals
+    ],
+    "scaffolds":[
+      // list of Scaffolds-objects
+      {
+        "name": "subproject tox.ini's",
+        "pattern": "**/tox.ini",
+        "scope":"*",
+        "src":"pyproject.toml",
+       },
+     ],
+   },
+
+   // Config for `pypi` plugin:
+  // Provider for details about the PyPI this project uses.
+  // (This is only used in rendering docs; `pynchon` does not manage releases.
+  // You can probably leave this blank for public PyPI but pynchon's own
+  // config has some values just1to ensure the plugin is exercised.)
+  "pypi": {
+    "name":"THE public PyPI"
+  },
+
+}
